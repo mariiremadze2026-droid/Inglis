@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🇬🇧 English 20 Day Challenge</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="stars"></div>
+        <div class="stars stars2"></div>
+        <div class="stars stars3"></div>
+    </div>
+
+    <!-- Main App -->
+    <main class="app">
+
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>🇬🇧 English Challenge</h1>
+                <p>ისწავლე ინგლისური 20 დღეში</p>
+            </div>
+
+            <div class="streak">
+                🔥
+                <span id="streak">0</span>
+                დღე
+            </div>
+        </header>
+
+
+        <!-- Progress Card -->
+        <section class="progress-card">
+
+            <div class="progress-top">
+                <div>
+                    <span>დღე</span>
+                    <strong id="dayNumber">1</strong>
+                    <span>/ 20</span>
+                </div>
+
+                <div>
+                    <strong id="percent">0%</strong>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div id="progressBar"></div>
+            </div>
+
+            <div class="progress-info">
+                <span>
+                    📚 სიტყვები:
+                    <b id="learnedWords">0</b>/25
+                </span>
+
+                <span>
+                    💬 ფრაზები:
+                    <b id="learnedPhrases">0</b>/10
+                </span>
+            </div>
+
+        </section>
+
+
+        <!-- Days -->
+        <section class="days-section">
+
+            <h2>📅 სასწავლო დღეები</h2>
+
+            <div class="days" id="days"></div>
+
+        </section>
+
+
+        <!-- Tabs -->
+        <section class="learning-section">
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    data-type="words"
+                    id="wordsTab">
+                    📚 სიტყვები
+                </button>
+
+                <button
+                    class="tab"
+                    data-type="phrases"
+                    id="phrasesTab">
+                    💬 ფრაზები
+                </button>
+
+            </div>
+
+
+            <!-- Content -->
+            <div id="content"></div>
+
+        </section>
+
+
+        <!-- Daily Goal -->
+        <section class="goal-card">
+
+            <div class="goal-icon">
+                🎯
+            </div>
+
+            <div class="goal-text">
+                <h3>დღის მიზანი</h3>
+                <p>
+                    ისწავლე 25 სიტყვა და 10 ფრაზა
+                </p>
+            </div>
+
+            <div class="goal-status" id="goalStatus">
+                0%
+            </div>
+
+        </section>
+
+
+        <!-- Footer -->
+        <footer>
+            <p>🇬🇧 ყოველდღე ცოტაოდენი სწავლა = დიდი შედეგი ❤️</p>
+        </footer>
+
+    </main>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
