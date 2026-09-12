@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>English 20 Day Challenge</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(circle at 20% 20%, #4b1d75, transparent 35%),
+        radial-gradient(circle at 80% 80%, #162c70, transparent 35%),
+        linear-gradient(135deg, #090014, #101a3a);
+}
+
+/* ANIMATED BACKGROUND */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    opacity: .6;
+    animation: float 8s infinite ease-in-out;
+}
+
+.star:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+.star:nth-child(2) { left: 25%; top: 70%; animation-delay: 2s; }
+.star:nth-child(3) { left: 40%; top: 30%; animation-delay: 4s; }
+.star:nth-child(4) { left: 60%; top: 80%; animation-delay: 1s; }
+.star:nth-child(5) { left: 75%; top: 15%; animation-delay: 3s; }
+.star:nth-child(6) { left: 90%; top: 55%; animation-delay: 5s; }
+.star:nth-child(7) { left: 50%; top: 55%; animation-delay: 2s; }
+.star:nth-child(8) { left: 15%; top: 90%; animation-delay: 4s; }
+
+@keyframes float {
+    0%,100% {
+        transform: translateY(0) scale(1);
+        opacity: .3;
+    }
+
+    50% {
+        transform: translateY(-50px) scale(1.8);
+        opacity: 1;
+    }
+}
+
+/* HEADER */
+
+header {
+    text-align: center;
+    padding: 30px 15px 20px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p {
+    opacity: .75;
+}
+
+/* MAIN */
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: rgba(255,255,255,.09);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 18px;
+    padding: 18px 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.stat strong {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.stat span {
+    font-size: 13px;
+    opacity: .7;
+}
+
+/* DAYS */
+
+.days {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.day {
+    min-width: 75px;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255,255,255,.1);
+    color: white;
+    cursor: pointer;
+}
+
+.day.active {
+    background: #7c3aed;
+    box-shadow: 0 0 20px rgba(124,58,237,.6);
+}
+
+.day.completed {
+    border: 1px solid #36e27f;
+}
+
+/* PROGRESS */
+
+.progress-box {
+    background: rgba(255,255,255,.08);
+    padding: 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.progress-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.progress {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,.1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#7c3aed,#22d3ee);
+    transition: .4s;
+}
+
+/* TABS */
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    background: rgba(255,255,255,.1);
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #7c3aed;
+}
+
+/* WORD CARDS */
+
+.card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 12px;
+    backdrop-filter: blur(12px);
+    transition: .25s;
+}
+
+.card.learned {
+    border-color: #36e27f;
+    background: rgba(54,226,127,.08);
+}
+
+.word {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.translation {
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.pronunciation {
+    margin-top: 5px;
+    color: #b9a6ff;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.listen,
+.learn {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 14px;
+    color: white;
+    cursor: pointer;
+}
+
+.listen {
+    background: #2563eb;
+}
+
+.learn {
+    background: #16a34a;
+}
+
+.card.learned .learn {
+    background: #555;
+}
+
+/* PHRASE */
+
+.phrase {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.phrase-ka {
+    margin-top: 8px;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+    opacity: .7;
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .stat {
+        padding: 14px 5px;
+    }
+
+    .stat strong {
+        font-size: 20px;
+    }
+
+    .word {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+</div>
+
+<header>
+    <h1>🇬🇧 English 20 Day Challenge</h1>
+    <p>ისწავლე ყოველდღე ცოტ-ცოტა და გახდი უკეთესი ❤️</p>
+</header>
+
+<div class="container">
+
+    <div class="dashboard">
+
+        <div class="stat">
+            <strong id="dayNumber">1</strong>
+            <span>დღე</span>
+        </div>
+
+        <div class="stat">
+            <strong id="learnedWords">0/25</strong>
+            <span>სიტყვები</span>
+        </div>
+
+        <div class="stat">
+            <strong id="learnedPhrases">0/10</strong>
+            <span>ფრაზები</span>
+        </div>
+
+    </div>
+
+    <div class="days" id="days"></div>
+
+    <div class="progress-box">
+
+        <div class="progress-title">
+            <span>დღის პროგრესი</span>
+            <strong id="percent">0%</strong>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+    </div>
+
+    <div class="tabs">
+
+        <button class="tab active" onclick="showTab('words',this)">
+            📚 სიტყვები
+        </button>
+
+        <button class="tab" onclick="showTab('phrases',this)">
+            🗣️ ფრაზები
+        </button>
+
+    </div>
+
+    <div id="content"></div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   WORD DATABASE
+========================= */
+
+const words = [
+
+["Hello","გამარჯობა","ჰელოუ"],
+["Goodbye","ნახვამდის","გუდბაი"],
+["Please","გთხოვ","ფლიზ"],
+["Thank you","მადლობა","თენქ იუ"],
+["Sorry","ბოდიში","სორი"],
+["Yes","დიახ","იეს"],
+["No","არა","ნოუ"],
+["Name","სახელი","ნეიმ"],
+["Friend","მეგობარი","ფრენდ"],
+["Family","ოჯახი","ფემილი"],
+["House","სახლი","ჰაუს"],
+["Home","სახლი/სახლი სადაც ცხოვრობ","ჰოუმ"],
+["Room","ოთახი","რუმ"],
+["Door","კარი","დორ"],
+["Window","ფანჯარა","უინდოუ"],
+["Table","მაგიდა","თეიბლ"],
+["Chair","სკამი","ჩეარ"],
+["Floor","იატაკი","ფლორ"],
+["Wall","კედელი","უოლ"],
+["Bed","საწოლი","ბედ"],
+["School","სკოლა","სქულ"],
+["Student","მოსწავლე/სტუდენტი","სთიუდენტ"],
+["Teacher","მასწავლებელი","თიჩერ"],
+["Book","წიგნი","ბუქ"],
+["Pen","კალამი","პენ"],
+
+["Food","საჭმელი","ფუდ"],
+["Water","წყალი","უოთერ"],
+["Bread","პური","ბრედ"],
+["Milk","რძე","მილქ"],
+["Egg","კვერცხი","ეგ"],
+["Meat","ხორცი","მით"],
+["Fruit","ხილი","ფრუთ"],
+["Apple","ვაშლი","ეფლ"],
+["Tea","ჩაი","თი"],
+["Coffee","ყავა","ქოფი"],
+["Time","დრო","თაიმ"],
+["Day","დღე","დეი"],
+["Night","ღამე","ნაით"],
+["Morning","დილა","მორნინგ"],
+["Evening","საღამო","ივნინგ"],
+["Today","დღეს","თუდეი"],
+["Tomorrow","ხვალ","თუმოროუ"],
+["Yesterday","გუშინ","იესთერდეი"],
+["Week","კვირა","უიქ"],
+["Month","თვე","მანთ"],
+["Year","წელი","იირ"],
+["Good","კარგი","გუდ"],
+["Bad","ცუდი","ბედ"],
+["Big","დიდი","ბიგ"],
+["Small","პატარა","სმოლ"],
+["Beautiful","ლამაზი","ბიუთიფულ"],
+["Easy","მარტივი","იზი"],
+["Difficult","რთული","დიფიქალთ"],
+["Important","მნიშვნელოვანი","იმფორთენთ"],
+["Happy","ბედნიერი","ჰეფი"],
+["Sad","მოწყენილი","სედ"],
+["Go","წასვლა","გოუ"],
+["Come","მოსვლა","ქამ"],
+["See","ნახვა","სი"],
+["Look","ყურება","ლუქ"],
+["Know","ცოდნა","ნოუ"],
+["Think","ფიქრი","თინქ"],
+["Want","სურვილი","უონთ"],
+["Need","საჭიროება","ნიდ"],
+["Like","მოწონება","ლაიქ"],
+["Love","სიყვარული","ლავ"],
+["Have","ქონა","ჰევ"],
+["Make","გაკეთება","მეიქ"],
+["Do","კეთება","დუ"],
+["Get","მიღება","გეთ"],
+["Give","მიცემა","გივ"],
+["Take","აღება","თეიქ"],
+["Find","პოვნა","ფაინდ"],
+["Help","დახმარება","ჰელფ"],
+["Use","გამოყენება","იუზ"],
+["Work","მუშაობა","უორქ"],
+["Can","შეძლება","ქენ"],
+["Must","უნდა","მასთ"],
+["Should","უნდა/სასურველია","შუდ"],
+["Will","იქნება","უილ"],
+["Can't","ვერ","ქენთ"],
+["And","და","ენდ"],
+["But","მაგრამ","ბათ"],
+["Because","იმიტომ რომ","ბიქოზ"],
+["If","თუ","იფ"],
+["Or","ან","ორ"],
+["I","მე","აი"],
+["You","შენ/თქვენ","იუ"],
+["He","ის, კაცი","ჰი"],
+["She","ის, ქალი","ში"],
+["We","ჩვენ","უი"],
+["They","ისინი","ზეი"],
+["This","ეს","ზის"],
+["That","ის","ზეთ"],
+["What","რა","უოთ"],
+["Why","რატომ","უაი"]
+
+];
+
+/* =========================
+   PHRASES
+========================= */
+
+const phrases = [
+
+["Hello! How are you?","გამარჯობა! როგორ ხარ?"],
+["I am fine, thank you.","კარგად ვარ, მადლობა."],
+["What is your name?","რა გქვია?"],
+["My name is Mari.","მე მქვია მარი."],
+["Nice to meet you.","სასიამოვნოა შენი გაცნობა."],
+["Where are you from?","საიდან ხარ?"],
+["I am from Georgia.","მე საქართველოდან ვარ."],
+["What are you doing?","რას აკეთებ?"],
+["I don't understand.","ვერ ვიგებ."],
+["Can you help me?","შეგიძლია დამეხმარო?"],
+
+["How old are you?","რამდენი წლის ხარ?"],
+["Where do you live?","სად ცხოვრობ?"],
+["What do you like?","რა მოგწონს?"],
+["I like music.","მე მუსიკა მომწონს."],
+["I love English.","მე ინგლისური მიყვარს."],
+["See you tomorrow.","ხვალ გნახავ."],
+["Have a nice day!","კარგ დღეს გისურვებ!"],
+["What time is it?","რომელი საათია?"],
+["I am tired.","დავიღალე."],
+["I am hungry.","მშია."],
+
+["I am thirsty.","მწყურია."],
+["Please wait.","გთხოვ, დამელოდე."],
+["Come with me.","გამომყევი."],
+["Let's go!","წავიდეთ!"],
+["Don't worry.","არ ინერვიულო."],
+["Everything is okay.","ყველაფერი კარგადაა."],
+["I don't know.","არ ვიცი."],
+["I know.","ვიცი."],
+["I think so.","ასე ვფიქრობ."],
+["Of course.","რა თქმა უნდა."],
+
+["Really?","მართლა?"],
+["That's great!","ეს შესანიშნავია!"],
+["That's interesting.","ეს საინტერესოა."],
+["I agree.","ვეთანხმები."],
+["I don't agree.","არ ვეთანხმები."],
+["Can you repeat?","შეგიძლია გაიმეორო?"],
+["Speak slowly, please.","გთხოვ, ნელა ილაპარაკე."],
+["What does this mean?","რას ნიშნავს ეს?"],
+["How do you say this in English?","ეს ინგლისურად როგორ ითქმის?"],
+["Thank you for your help.","მადლობა დახმარებისთვის."]
+
+];
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+let currentDay = 1;
+let currentTab = "words";
+
+let progress = JSON.parse(
+    localStorage.getItem("englishProgress")
+) || {};
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getDayData(day) {
+
+    const wordStart = (day - 1) * 25;
+
+    const phraseStart = (day - 1) * 10;
+
+    return {
+        words: words.slice(wordStart, wordStart + 25),
+        phrases: phrases.slice(phraseStart, phraseStart + 10)
+    };
+}
+
+
+function getKey(type,index) {
+
+    return `${currentDay}-${type}-${index}`;
+
+}
+
+
+/* =========================
+   DAYS
+========================= */
+
+function createDays() {
+
+    const container = document.getElementById("days");
+
+    container.innerHTML = "";
+
+    for(let i=1;i<=20;i++){
+
+        const button = document.createElement("button");
+
+        button.className = "day";
+
+        if(i === currentDay)
+            button.classList.add("active");
+
+        if(isDayComplete(i))
+            button.classList.add("completed");
+
+        button.innerHTML = `დღე ${i}`;
+
+        button.onclick = () => {
+
+            currentDay = i;
+
+            currentTab = "words";
+
+            createDays();
+
+            render();
+
+        };
+
+        container.appendChild(button);
+
+    }
+
+}
+
+
+function isDayComplete(day){
+
+    let completed = 0;
+
+    for(let i=0;i<25;i++){
+
+        if(progress[`${day}-word-${i}`])
+            completed++;
+
+    }
+
+    for(let i=0;i<10;i++){
+
+        if(progress[`${day}-phrase-${i}`])
+            completed++;
+
+    }
+
+    return completed === 35;
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(){
+
+    const data = getDayData(currentDay);
+
+    const content = document.getElementById("content");
+
+    content.innerHTML = "";
+
+    if(currentTab === "words"){
+
+        data.words.forEach((item,index)=>{
+
+            const card = document.createElement("div");
+
+            const key = getKey("word",index);
+
+            const learned = progress[key];
+
+            card.className = "card";
+
+            if(learned)
+                card.classList.add("learned");
+
+            card.innerHTML = `
+
+                <div class="word">${item[0]}</div>
+
+                <div class="translation">
+                    🇬🇪 ${item[1]}
+                </div>
+
+                <div class="pronunciation">
+                    🔊 ${item[2]}
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        class="listen"
+                        onclick="speak('${item[0].replace(/'/g,"\\'")}')">
+                        🔊 მოსმენა
+                    </button>
+
+                    <button
+                        class="learn"
+                        onclick="toggleLearn('${key}')">
+                        ${learned ? "✓ ნასწავლია" : "✓ ვისწავლე"}
+                    </button>
+
+                </div>
+            `;
+
+            content.appendChild(card);
+
+        });
+
+    }
+
+    else {
+
+        data.phrases.forEach((item,index)=>{
+
+            const card = document.createElement("div");
+
+            const key = getKey("phrase",index);
+
+            const learned = progress[key];
+
+            card.className = "card";
+
+            if(learned)
+                card.classList.add("learned");
+
+            card.innerHTML = `
+
+                <div class="phrase">
+                    ${item[0]}
+                </div>
+
+                <div class="phrase-ka">
+                    🇬🇪 ${item[1]}
+                </div>
+
+                <div class="buttons">
+
+                    <button
+                        class="listen"
+                        onclick="speak('${item[0].replace(/'/g,"\\'")}')">
+                        🔊 მოსმენა
+                    </button>
+
+                    <button
+                        class="learn"
+                        onclick="toggleLearn('${key}')">
+                        ${learned ? "✓ ნასწავლია" : "✓ ვისწავლე"}
+                    </button>
+
+                </div>
+            `;
+
+            content.appendChild(card);
+
+        });
+
+    }
+
+    updateStats();
+
+}
+
+
+/* =========================
+   LEARN BUTTON
+========================= */
+
+function toggleLearn(key){
+
+    progress[key] = !progress[key];
+
+    localStorage.setItem(
+        "englishProgress",
+        JSON.stringify(progress)
+    );
+
+    render();
+
+    createDays();
+
+}
+
+
+/* =========================
+   SPEECH
+========================= */
+
+function speak(text){
+
+    if(!("speechSynthesis" in window)){
+
+        alert("თქვენს ბრაუზერს ხმოვანი ფუნქცია არ აქვს.");
+
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";
+
+    speech.rate = 0.85;
+
+    speech.pitch = 1;
+
+    speechSynthesis.speak(speech);
+
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+function showTab(tab,button){
+
+    currentTab = tab;
+
+    document.querySelectorAll(".tab")
+        .forEach(x => x.classList.remove("active"));
+
+    button.classList.add("active");
+
+    render();
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+    let wordCount = 0;
+
+    let phraseCount = 0;
+
+    for(let i=0;i<25;i++){
+
+        if(progress[`${currentDay}-word-${i}`])
+            wordCount++;
+
+    }
+
+    for(let i=0;i<10;i++){
+
+        if(progress[`${currentDay}-phrase-${i}`])
+            phraseCount++;
+
+    }
+
+    document.getElementById("dayNumber")
+        .textContent = currentDay;
+
+    document.getElementById("learnedWords")
+        .textContent = `${wordCount}/25`;
+
+    document.getElementById("learnedPhrases")
+        .textContent = `${phraseCount}/10`;
+
+    const total = wordCount + phraseCount;
+
+    const percent = Math.round(
+        (total / 35) * 100
+    );
+
+    document.getElementById("percent")
+        .textContent = percent + "%";
+
+    document.getElementById("progressBar")
+        .style.width = percent + "%";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+createDays();
+
+render();
+
+</script>
+
+</body>
+</html>
